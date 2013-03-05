@@ -4,7 +4,7 @@
   "description": "Project to illustrate alternate architectures",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha spec"
   },
   "repository": "",
   "keywords": [
@@ -13,5 +13,8 @@
     "CQRS"
   ],
   "author": "Daan van Berkel",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "1.8.1"
+  }
 }
