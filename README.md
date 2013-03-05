@@ -1,4 +1,4 @@
-Address Book
+Address Book [![Build Status](https://travis-ci.org/dvberkel/address_book.png?branch=master)](https://travis-ci.org/dvberkel/address_book)
 ============
 
 This project illustrates a different architecture then the "standard"
