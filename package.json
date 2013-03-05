@@ -1,0 +1,17 @@
+{
+  "name": "address_book",
+  "version": "0.0.0",
+  "description": "Project to illustrate alternate architectures",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "architecture",
+    "DDD",
+    "CQRS"
+  ],
+  "author": "Daan van Berkel",
+  "license": "MIT"
+}
