@@ -52,4 +52,25 @@ describe("An AddressBook", function(){
 
 	assert.equal(1, counter.summary());
     });
+
+    describe("Persons", function(){
+	it("should be able to add an address to", function(){
+	    addressBook.on("addAddress", counter.callback);
+	    addressBook.addPerson({ "name" : "Test" });
+	    
+	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
+
+	    assert.equal(1, counter.summary());
+	});
+
+	it("should not be able to add same address twice", function(){
+	    addressBook.on("addAddress", counter.callback);
+	    addressBook.addPerson({ "name" : "Test" });
+	    
+	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
+	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
+
+	    assert.equal(1, counter.summary());
+	});
+    });
 });
