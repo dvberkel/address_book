@@ -6,8 +6,16 @@ describe("An AddressBook", function(){
     var counterFactory = function(){
 	var count = 0;
 	return {
-	    "callback" : function(){ count++ },
-	    "summary" : function(){ return count }
+	    "callback" : function(){ count++; },
+	    "summary" : function(){ return count; }
+	}
+    };
+
+    var captureFactory = function(){
+	var lastEvent;
+	return {
+	    "callback" : function(event){ lastEvent = event; },
+	    "lastEvent" : function(){ return lastEvent; }
 	}
     };
 
@@ -71,6 +79,36 @@ describe("An AddressBook", function(){
 	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
 
 	    assert.equal(1, counter.summary());
+	});
+    });
+
+    describe("Events", function(){
+	var capturer;
+
+	beforeEach(function(){
+	    capturer = captureFactory();
+	});
+
+	it("addPerson", function(){
+	    addressBook.on("addPerson", capturer.callback);
+
+	    addressBook.addPerson({ "name" : "Test" });
+
+	    assert.equal("addPerson", capturer.lastEvent().type);
+	    assert.equal("test", capturer.lastEvent().context);
+	    assert.equal("Test", capturer.lastEvent().person);
+	});
+
+	it("addAddress", function(){
+	    addressBook.on("addAddress", capturer.callback);
+	    
+	    addressBook.addPerson({ "name" : "Test" });
+	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
+
+	    assert.equal("addAddress", capturer.lastEvent().type);
+	    assert.equal("test", capturer.lastEvent().context);
+	    assert.equal("Test", capturer.lastEvent().person);
+	    assert.equal("test@nowhere", capturer.lastEvent().email);
 	});
     });
 });
