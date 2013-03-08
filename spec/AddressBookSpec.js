@@ -1,23 +1,11 @@
 var assert = require("assert");
+var util = require("../spec/util");
 var AddressBook = require("../lib/addressbook.js");
 
 
 describe("An AddressBook", function(){
-    var counterFactory = function(){
-	var count = 0;
-	return {
-	    "callback" : function(){ count++; },
-	    "summary" : function(){ return count; }
-	}
-    };
-
-    var captureFactory = function(){
-	var lastEvent;
-	return {
-	    "callback" : function(event){ lastEvent = event; },
-	    "lastEvent" : function(){ return lastEvent; }
-	}
-    };
+    var counterFactory = util.counterFactory;
+    var captureFactory = util.captureFactory;
 
     var addressBook;
     var counter;
