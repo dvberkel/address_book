@@ -1,7 +1,9 @@
 var assert = require("assert");
 var util = require("../spec/util");
 var execute = require("../lib/filter");
+var Clock = require("../lib/clock").TestClock;
 var Store = require("../lib/eventstore").InMemory;
+
 
 describe("EventStore", function(){
     var counter;
@@ -13,7 +15,7 @@ describe("EventStore", function(){
     
     describe("(InMemory)", function(){
 	beforeEach(function(){
-	    store = new Store();
+	    store = new Store(new Clock());
 	});
 
 	it("should exist", function(){
@@ -36,6 +38,28 @@ describe("EventStore", function(){
 	    store.all(counter.callback);
 
 	    assert.equal(counter.summary(), 3);
+	});
+
+	it("should timestamp all events", function(){
+	    store.store({ "type": "Test A" });
+	    var timestamp = null;
+
+	    store.all(function(event){ timestamp = event.timestamp; });
+
+	    assert.notEqual(timestamp, null);
+	});
+
+	it("should timestamp all events", function(){
+	    store.store({ "type": "Test A" });
+	    store.store({ "type": "Test B" });
+	    store.store({ "type": "Test C" });
+	    var timestamps = [];
+
+	    store.all(function(event){ timestamps.push(event.timestamp); });
+
+	    assert.equal(timestamps[0], 0);
+	    assert.equal(timestamps[1], 1);
+	    assert.equal(timestamps[2], 2);
 	});
 
 	describe("filters", function(){
