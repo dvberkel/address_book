@@ -18,14 +18,14 @@ describe("Repository", function(){
     });
 
     beforeEach(function(){
-	store.store({ "type" : "addPerson", "context" : "test 1", "person" : "Test A" });
-	store.store({ "type" : "addAddress", "context" : "test 1", "person" : "Test A", "email" : "test@nowhere" });
-	store.store({ "type" : "addAddress", "context" : "test 1", "person" : "Test A", "email" : "test@everywhere" });
+	store.store({ "type" : "PersonAdded", "context" : "test 1", "person" : "Test A" });
+	store.store({ "type" : "AddressAdded", "context" : "test 1", "person" : "Test A", "email" : "test@nowhere" });
+	store.store({ "type" : "AddressAdded", "context" : "test 1", "person" : "Test A", "email" : "test@everywhere" });
 
-	store.store({ "type" : "addPerson", "context" : "test 1", "person" : "Test B" });
-	store.store({ "type" : "addAddress", "context" : "test 1", "person" : "Test B", "email" : "test@somewhere" });
+	store.store({ "type" : "PersonAdded", "context" : "test 1", "person" : "Test B" });
+	store.store({ "type" : "AddressAdded", "context" : "test 1", "person" : "Test B", "email" : "test@somewhere" });
 
-	store.store({ "type" : "addPerson", "context" : "test 2", "person" : "Test C" });
+	store.store({ "type" : "PersonAdded", "context" : "test 2", "person" : "Test C" });
 
     });
 

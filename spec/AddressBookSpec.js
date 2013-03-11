@@ -82,7 +82,7 @@ describe("An AddressBook", function(){
 
 	    addressBook.addPerson({ "name" : "Test" });
 
-	    assert.equal("addPerson", capturer.lastEvent().type);
+	    assert.equal("PersonAdded", capturer.lastEvent().type);
 	    assert.equal("test", capturer.lastEvent().context);
 	    assert.equal("Test", capturer.lastEvent().person);
 	});
@@ -93,7 +93,7 @@ describe("An AddressBook", function(){
 	    addressBook.addPerson({ "name" : "Test" });
 	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
 
-	    assert.equal("addAddress", capturer.lastEvent().type);
+	    assert.equal("AddressAdded", capturer.lastEvent().type);
 	    assert.equal("test", capturer.lastEvent().context);
 	    assert.equal("Test", capturer.lastEvent().person);
 	    assert.equal("test@nowhere", capturer.lastEvent().email);
@@ -104,7 +104,7 @@ describe("An AddressBook", function(){
 	it("should add persons", function(){
 	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
-	    var events = [{"type": "addPerson", "context" : "spawn", "person" : "test"}];
+	    var events = [{"type": "PersonAdded", "context" : "spawn", "person" : "test"}];
 
 	    events.forEach(spawn.redo, spawn);
 
@@ -115,8 +115,8 @@ describe("An AddressBook", function(){
 	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
 	    var events = [
-		{"type": "addPerson", "context" : "spawn", "person" : "A"},
-		{"type": "addPerson", "context" : "spawn", "person" : "B"},
+		{"type": "PersonAdded", "context" : "spawn", "person" : "A"},
+		{"type": "PersonAdded", "context" : "spawn", "person" : "B"},
 	    ];
 
 	    events.forEach(spawn.redo, spawn);
@@ -127,7 +127,7 @@ describe("An AddressBook", function(){
 	it("should add persons when context matches", function(){
 	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
-	    var events = [{"type": "addPerson", "context" : "other", "person" : "test"}];
+	    var events = [{"type": "PersonAdded", "context" : "other", "person" : "test"}];
 
 	    events.forEach(spawn.redo, spawn);
 
@@ -138,8 +138,8 @@ describe("An AddressBook", function(){
 	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
 	    var events = [
-		{"type": "addPerson", "context" : "spawn", "person" : "test"},
-		{"type": "addAddress", "context" : "spawn", "person" : "test", "email" : "test@nowhere" },
+		{"type": "PersonAdded", "context" : "spawn", "person" : "test"},
+		{"type": "AddressAdded", "context" : "spawn", "person" : "test", "email" : "test@nowhere" },
 	    ];
 	    
 	    events.forEach(spawn.redo, spawn);
