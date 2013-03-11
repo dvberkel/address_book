@@ -9,5 +9,29 @@ Most notable we demonstrate
 * [DDD][]
 * [CQRS][]
 
+Setup
+-----
+
+This project uses [node.js][]. Run the following command to install
+the dependencies
+
+    npm install
+
+### Testing
+
+[mocha][] is used for testing. To run all the tests execute
+
+    npm test
+
+For a different set of reports execute
+
+    ./node_modules/.bin/mocha --reporters
+
+and call `mocha --reporter` with the appropriate parameter. E.g.
+
+    ./node_modules/.bin/mocha --reporter markdown spec
+
 [DDD]: http://en.wikipedia.org/wiki/Domain-driven_design "Wikipedia on Domain Driven Design"
 [CQRS]: http://en.wikipedia.org/wiki/Command%E2%80%93query_separation "Wikipedia on Command Query Responsibility Seperation"
+[node.js]: http://nodejs.org/ "Node.js Hompage"
+[mocha]: http://visionmedia.github.com/mocha/ "Mocha Homepage"
