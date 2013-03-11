@@ -40,4 +40,27 @@ describe("Repository", function(){
 	
 	assert.equal(counter.summary(), 2);
     });
+    
+    describe("unit of work", function(){
+	it("should provide a transaction", function(){
+	    var transaction = repository.transaction();
+	    var addressBook = transaction.fetch("test 2");
+
+	    addressBook.allPersons(counter.callback);
+	    
+	    assert.equal(counter.summary(), 1);
+	});
+
+	it("transaction should commit", function(){
+	    var transaction = repository.transaction();
+	    var addressBook = transaction.fetch("test 2");
+	    addressBook.addPerson({ "name" : "test" });
+	    transaction.commit();
+
+	    addressBook = repository.fetch("test 2");
+	    addressBook.allPersons(counter.callback);
+	    
+	    assert.equal(counter.summary(), 2);
+	});
+    });
 });
