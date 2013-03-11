@@ -31,7 +31,15 @@ and call `mocha --reporter` with the appropriate parameter. E.g.
 
     ./node_modules/.bin/mocha --reporter markdown spec
 
+### Running
+
+[nodemon][] is used during development. It watches the application and
+restarts when a file changes. Use it in the following manner
+
+    ./node_modules/.bin/nodemon app.js
+
 [DDD]: http://en.wikipedia.org/wiki/Domain-driven_design "Wikipedia on Domain Driven Design"
 [CQRS]: http://en.wikipedia.org/wiki/Command%E2%80%93query_separation "Wikipedia on Command Query Responsibility Seperation"
 [node.js]: http://nodejs.org/ "Node.js Hompage"
 [mocha]: http://visionmedia.github.com/mocha/ "Mocha Homepage"
+[nodemon]: https://github.com/remy/nodemon "Nodemon on GitHub"
