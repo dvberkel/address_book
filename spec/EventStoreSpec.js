@@ -75,6 +75,12 @@ describe("EventStore", function(){
 
 		assert.equal(counter.summary(), 1);
 	    });
+
+	    it("should be able to return events since a moment in time", function(){
+		store.since(2, counter.callback);
+
+		assert.equal(counter.summary(), 3);
+	    });
 	});
     });
 });
