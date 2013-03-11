@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha spec"
   },
-  "repository": "",
+  "repository": "https://github.com/dvberkel/address_book",
   "keywords": [
     "architecture",
     "DDD",
@@ -14,7 +14,11 @@
   ],
   "author": "Daan van Berkel",
   "license": "MIT",
+  "dependencies": {
+    "express": "3.1.0"
+  },
   "devDependencies": {
-    "mocha": "1.8.1"
+    "mocha": "1.8.1",
+    "nodemon": "0.7.2"
   }
 }
