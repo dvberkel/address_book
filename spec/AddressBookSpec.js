@@ -33,7 +33,7 @@ describe("An AddressBook", function(){
     });
 
     it("should send an event when a person is added", function(){
-	addressBook.on("addPerson", counter.callback);
+	addressBook.on("change", counter.callback);
 
 	addressBook.addPerson({ "name" : "Test" });
 
@@ -41,7 +41,7 @@ describe("An AddressBook", function(){
     });
 
     it("should not add same person twice", function(){
-	addressBook.on("addPerson", counter.callback);
+	addressBook.on("change", counter.callback);
 
 	addressBook.addPerson({ "name" : "Test" });
 	addressBook.addPerson({ "name" : "Test" });
@@ -51,22 +51,22 @@ describe("An AddressBook", function(){
 
     describe("Persons", function(){
 	it("should be able to add an address to", function(){
-	    addressBook.on("addAddress", counter.callback);
+	    addressBook.on("change", counter.callback);
 	    addressBook.addPerson({ "name" : "Test" });
 	    
 	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
 
-	    assert.equal(1, counter.summary());
+	    assert.equal(2, counter.summary());
 	});
 
 	it("should not be able to add same address twice", function(){
-	    addressBook.on("addAddress", counter.callback);
+	    addressBook.on("change", counter.callback);
 	    addressBook.addPerson({ "name" : "Test" });
 	    
 	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
 	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
 
-	    assert.equal(1, counter.summary());
+	    assert.equal(2, counter.summary());
 	});
     });
 
@@ -78,7 +78,7 @@ describe("An AddressBook", function(){
 	});
 
 	it("addPerson", function(){
-	    addressBook.on("addPerson", capturer.callback);
+	    addressBook.on("change", capturer.callback);
 
 	    addressBook.addPerson({ "name" : "Test" });
 
@@ -88,7 +88,7 @@ describe("An AddressBook", function(){
 	});
 
 	it("addAddress", function(){
-	    addressBook.on("addAddress", capturer.callback);
+	    addressBook.on("change", capturer.callback);
 	    
 	    addressBook.addPerson({ "name" : "Test" });
 	    addressBook.to("Test").addAddress({ "email" : "test@nowhere" });
@@ -103,7 +103,7 @@ describe("An AddressBook", function(){
     describe("respawning", function(){
 	it("should add persons", function(){
 	    var spawn = new AddressBook("spawn");
-	    spawn.on("addPerson", counter.callback);
+	    spawn.on("change", counter.callback);
 	    var events = [{"type": "addPerson", "context" : "spawn", "person" : "test"}];
 
 	    events.forEach(spawn.redo, spawn);
@@ -113,7 +113,7 @@ describe("An AddressBook", function(){
 
 	it("should add persons", function(){
 	    var spawn = new AddressBook("spawn");
-	    spawn.on("addPerson", counter.callback);
+	    spawn.on("change", counter.callback);
 	    var events = [
 		{"type": "addPerson", "context" : "spawn", "person" : "A"},
 		{"type": "addPerson", "context" : "spawn", "person" : "B"},
@@ -126,7 +126,7 @@ describe("An AddressBook", function(){
 
 	it("should add persons when context matches", function(){
 	    var spawn = new AddressBook("spawn");
-	    spawn.on("addPerson", counter.callback);
+	    spawn.on("change", counter.callback);
 	    var events = [{"type": "addPerson", "context" : "other", "person" : "test"}];
 
 	    events.forEach(spawn.redo, spawn);
@@ -136,15 +136,15 @@ describe("An AddressBook", function(){
 
 	it("should add addressess", function(){
 	    var spawn = new AddressBook("spawn");
-	    spawn.on("addAddress", counter.callback);
+	    spawn.on("change", counter.callback);
 	    var events = [
 		{"type": "addPerson", "context" : "spawn", "person" : "test"},
 		{"type": "addAddress", "context" : "spawn", "person" : "test", "email" : "test@nowhere" },
 	    ];
-
+	    
 	    events.forEach(spawn.redo, spawn);
 
-	    assert.equal(1, counter.summary());
+	    assert.equal(2, counter.summary());
 	});
     });
 });
