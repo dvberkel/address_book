@@ -11,11 +11,21 @@ describe("An AddressBook", function(){
     var counter;
 
     beforeEach(function(){
-	addressBook = new AddressBook("test");
+	addressBook = new AddressBook("test").create();;
     });
 
     beforeEach(function(){
 	counter = counterFactory();
+    });
+
+    it("should be created before it exists", function(){
+	var proto = new AddressBook("proto");
+
+	assert.ok(!proto.exist());
+
+	proto.create();
+
+	assert.ok(proto.exist());
     });
 
     it("should allow iteration over persons", function(){
@@ -28,6 +38,15 @@ describe("An AddressBook", function(){
 	addressBook.addPerson({ "name" : "Test" });
 
 	addressBook.allPersons(counter.callback)
+
+	assert.equal(1, counter.summary());
+    });
+
+    it("should send an event when it is created", function(){
+	var proto = new AddressBook("proto");
+	proto.on("change", counter.callback);
+
+	proto.create();
 
 	assert.equal(1, counter.summary());
     });
@@ -77,7 +96,16 @@ describe("An AddressBook", function(){
 	    capturer = captureFactory();
 	});
 
-	it("addPerson", function(){
+	it("ContextAdded", function(){
+	    addressBook.on("change", capturer.callback);
+
+	    addressBook.create();
+
+	    assert.equal("ContextCreated", capturer.lastEvent().type);
+	    assert.equal("test", capturer.lastEvent().context);
+	});
+
+	it("PersonAdded", function(){
 	    addressBook.on("change", capturer.callback);
 
 	    addressBook.addPerson({ "name" : "Test" });
@@ -87,7 +115,7 @@ describe("An AddressBook", function(){
 	    assert.equal("Test", capturer.lastEvent().person);
 	});
 
-	it("addAddress", function(){
+	it("AddressAdded", function(){
 	    addressBook.on("change", capturer.callback);
 	    
 	    addressBook.addPerson({ "name" : "Test" });
@@ -101,8 +129,22 @@ describe("An AddressBook", function(){
     });
 
     describe("respawning", function(){
+	var spawn;
+
+	beforeEach(function(){
+	    spawn = new AddressBook("spawn");
+	});
+
+	it("should create addressbook", function(){
+	    spawn.on("change", counter.callback);
+	    var events = [{"type": "ContextCreated", "context" : "spawn"}];
+
+	    events.forEach(spawn.redo, spawn);
+
+	    assert.equal(1, counter.summary());
+	});
+
 	it("should add persons", function(){
-	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
 	    var events = [{"type": "PersonAdded", "context" : "spawn", "person" : "test"}];
 
@@ -112,7 +154,6 @@ describe("An AddressBook", function(){
 	});
 
 	it("should add persons", function(){
-	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
 	    var events = [
 		{"type": "PersonAdded", "context" : "spawn", "person" : "A"},
@@ -135,7 +176,6 @@ describe("An AddressBook", function(){
 	});
 
 	it("should add addressess", function(){
-	    var spawn = new AddressBook("spawn");
 	    spawn.on("change", counter.callback);
 	    var events = [
 		{"type": "PersonAdded", "context" : "spawn", "person" : "test"},

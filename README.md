@@ -45,6 +45,7 @@ restarts when a file changes. Use it in the following manner
 The following curl commands provide a low-level interface to the adress book API.
 
 * `curl -X GET http://localhost:3000/events`: returns an list of events
+* `curl -X POST -H "Content-Type: application/json" http://localhost:3000/command -d '{"type":"addContext","context":"test"}'`: creates a context
 * `curl -X POST -H "Content-Type: application/json" http://localhost:3000/command -d '{"type":"addPerson","context":"test","name":"Test"}'`: sends a add person command
 * `curl -X POST -H "Content-Type: application/json" http://localhost:3000/command -d '{"type":"addAddress","context":"test","name":"Test","email":"nobody@nowhere.com"}'`: sends a add address command
 
