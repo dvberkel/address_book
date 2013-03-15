@@ -1,5 +1,7 @@
 var handlerFor = require("../lib/commandhandler");
 var ContextView = require("../view/context").InMemory();
+var PersonView = require("../view/person").InMemory();
+var EmailView = require("../view/email").InMemory();
 
 exports.handleCommand = function(req, res){
     var handler = handlerFor(req.repository, req.body);
@@ -20,4 +22,14 @@ exports.events = function(req, res){
 exports.allContexts = function(req, res){
     var contexts = ContextView.view(req.store);
     res.json(contexts);
+};
+
+exports.allPersons = function(req, res){
+    var persons = PersonView.view(req.params.context, req.store);
+    res.json(persons);
+};
+
+exports.allEmails = function(req, res){
+    var emails = EmailView.view(req.params.context, req.params.person, req.store);
+    res.json(emails);
 };

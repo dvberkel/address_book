@@ -14,6 +14,8 @@ app.post("/command", routes.handleCommand);
 
 app.get("/events", routes.events);
 app.get("/context", routes.allContexts);
+app.get("/context/:context", routes.allPersons);
+app.get("/context/:context/:person", routes.allEmails);
 
 var port = process.env.PORT || 3000;
 app.listen(port);
