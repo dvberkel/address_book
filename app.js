@@ -11,7 +11,9 @@ app.use(function(req, res, next) {
 });
 
 app.post("/command", routes.handleCommand);
+
 app.get("/events", routes.events);
+app.get("/context", routes.allContexts);
 
 var port = process.env.PORT || 3000;
 app.listen(port);
