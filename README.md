@@ -52,5 +52,5 @@ The following curl commands provide a low-level interface to the adress book API
 [DDD]: http://en.wikipedia.org/wiki/Domain-driven_design "Wikipedia on Domain Driven Design"
 [CQRS]: http://en.wikipedia.org/wiki/Command%E2%80%93query_separation "Wikipedia on Command Query Responsibility Seperation"
 [node.js]: http://nodejs.org/ "Node.js Hompage"
-[mocha]: http://visionmedia.github.com/mocha/ "Mocha Homepage"
+[mocha]: http://mochajs.org/ "Mocha Homepage"
 [nodemon]: https://github.com/remy/nodemon "Nodemon on GitHub"
